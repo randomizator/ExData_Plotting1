@@ -1,0 +1,15 @@
+if(!exists("dfPC")) 
+  source("readData.r")
+
+dfsub1<-as.numeric(dfPC[dfPC$Sub_metering_1!="?","Sub_metering_1"])
+dfsub2<-as.numeric(dfPC[dfPC$Sub_metering_2!="?","Sub_metering_2"])
+dfsub3<-as.numeric(dfPC[dfPC$Sub_metering_3!="?","Sub_metering_3"])
+
+png("plot3.png",width = 480, height=480)
+plot(x=dfPC$FullDate,y=dfsub1,type="l",ylim = c(0,30),xlab = "",ylab="Energy sub metering")
+par(new=T)
+plot(x=dfPC$FullDate,y=dfsub2,type="l",col="Red",ylim = c(0,30),xlab = "",ylab="Energy sub metering")
+par(new=T)
+plot(x=dfPC$FullDate,y=dfsub3,type="l",col="Blue",ylim = c(0,30),xlab = "",ylab="Energy sub metering")
+legend("topright",legend = c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),col=c("Black","Red","Blue"),lty=1)
+dev.off()
