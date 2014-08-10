@@ -1,0 +1,20 @@
+if(!exists("dfPC")) 
+  source("readData.r")
+
+dfVolt<-as.numeric(dfPC[dfPC$Voltage!="?","Voltage"])
+dfGlobReactive<-as.numeric(dfPC[dfPC$Global_reactive_power!="?","Global_reactive_power"])
+dfGAP<-as.numeric(dfPC[dfPC$Global_active_power!="?","Global_active_power"])
+
+png("plot4.png",width = 480, height=480)
+par(mfrow=c(2,2))
+plot(x=dfPC$FullDate,y=dfGAP, ylab="Global active power (kilowatt)",type="l")
+plot(x=dfPC$FullDate,y=dfVolt, ylab="Voltage",type="l",xlab="datetime")
+plot(x=dfPC$FullDate,y=dfsub1,type="l",ylim = c(0,30),xlab = "",ylab="Energy sub metering")
+par(new=T)
+plot(x=dfPC$FullDate,y=dfsub2,type="l",col="Red",ylim = c(0,30),xlab = "",ylab="Energy sub metering")
+par(new=T)
+plot(x=dfPC$FullDate,y=dfsub3,type="l",col="Blue",ylim = c(0,30),xlab = "",ylab="Energy sub metering")
+legend("topright",legend = c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),col=c("Black","Red","Blue"),lty=1,cex = 0.5, bty="n")
+
+plot(x=dfPC$FullDate,y=dfGlobReactive, ylab="Global_reactive_power",type="l",xlab="datetime")
+dev.off()
